@@ -1,0 +1,28 @@
+{
+  "name": "lingohub-client",
+  "version": "1.0.0-beta1",
+  "description": "LingoHub Toolset to upload and download translations",
+  "main": "./src/index.js",
+  "bin": {
+    "lingohub-client": "./bin/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": " git@github.com:openforce/lingohub-client.git"
+  },
+  "keywords": [
+    "lingohub",
+    "translation",
+    "management",
+    "cli",
+    "android",
+    "react-intl"
+  ],
+  "author": "Severin Burgstaller <Severin.Burgstaller@openforce.com>",
+  "license": "MIT",
+  "dependencies": {
+    "args": "^3.0.7",
+    "axios": "^0.17.0",
+    "request": "^2.83.0"
+  }
+}
