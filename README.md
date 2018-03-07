@@ -24,8 +24,6 @@ In LingoHub a translation is added from a base translation file (e.g. en.json).
 A key will never be deactivated nor deleted, but only added or changed.
 After changing (adding, updating) the base translation file, run 
 
-    yarn|npm run translation:upload
-
     lingohub-client u --account LINGOHUB_ACCOUNT --project LINGOHUB_PROJECT --token LINGOHUB_TOKEN --fileName BASE_LANGUAGE_FILE -d DIRECTORY_WITH_LANGUAGE_FILES
 
 
