@@ -1,6 +1,6 @@
 {
   "name": "lingohub-api-simple-client",
-  "version": "1.0.0-beta1",
+  "version": "1.0.1",
   "description": "Client for the LingoHub REST API to upload and download translations",
   "main": "./src/index.js",
   "bin": {
@@ -21,8 +21,8 @@
   "author": "Severin Burgstaller <Severin.Burgstaller@openforce.com>",
   "license": "MIT",
   "dependencies": {
-    "args": "^3.0.7",
-    "axios": "^0.17.0",
-    "request": "^2.83.0"
+    "args": "^5.0.1",
+    "axios": "^0.19.0",
+    "request": "^2.88.0"
   }
 }
