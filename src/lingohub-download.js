@@ -7,7 +7,7 @@ const {BASE_URL} = require('./config');
 const LANGUAGE_KEY_VARIABLE = /{LANGUAGE_KEY}/g;
 
 const getRessources = async ({account, project, token}) => {
-  const RESOURCERS_URL = `${BASE_URL}${account}/projects/${project}/resources.json?auth_token=${token}`;
+  const RESOURCERS_URL = `${BASE_URL}${account}/projects/${project}/resources?auth_token=${token}`;
 
   const resources = await axios.get(RESOURCERS_URL);
 
