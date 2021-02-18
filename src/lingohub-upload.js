@@ -4,7 +4,7 @@ const fs = require('fs');
 const BASE_URL = require('./config').BASE_URL;
 
 const uploadOne = ({account, project, token, filePath}) => {
-  const UPLOAD_URL = `${BASE_URL}${account}/projects/${project}/resources.json?auth_token=${token}`;
+  const UPLOAD_URL = `${BASE_URL}${account}/projects/${project}/resources?auth_token=${token}`;
 
   return new Promise((resolve, reject) => request.post({
     url: UPLOAD_URL,
