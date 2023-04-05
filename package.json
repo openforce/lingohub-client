@@ -22,7 +22,6 @@
   "license": "MIT",
   "dependencies": {
     "args": "^5.0.3",
-    "axios": "^1.3.3",
-    "request": "^2.88.1"
+    "axios": "^1.3.4"
   }
 }
