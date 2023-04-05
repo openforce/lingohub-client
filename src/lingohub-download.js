@@ -1,4 +1,3 @@
-const request = require('request');
 const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
@@ -12,12 +11,6 @@ const getRessources = async ({account, project, token}) => {
   const resources = await axios.get(RESOURCERS_URL);
 
   return resources && resources.data && resources.data.members;
-};
-
-const downloadOne = ({link, token}) => {
-  const FILE_URL = `${link}?auth_token=${token}`;
-
-  return request(FILE_URL);
 };
 
 const downloadAllResources = async ({
@@ -34,30 +27,32 @@ const downloadAllResources = async ({
 
   console.info('Download resource files into target directory', workingPath);
 
-  return Promise.all(resources.map(({links, name, project_locale}) => new Promise((resolve, reject) => {
-    let currentWorkingPath = workingPath;
-    if (baseOverrideLanguage && baseOverrideFileName && project_locale === baseOverrideLanguage) {
-      console.info(`Overwrite base locale (${baseOverrideLanguage}) to`, baseOverrideFileName);
-      currentWorkingPath = path.join(
-        currentWorkingPath,
-        baseOverrideFileName.replace(LANGUAGE_KEY_VARIABLE, project_locale),
-      );
-    } else if (fileName) {
-      currentWorkingPath = path.join(workingPath, fileName.replace(LANGUAGE_KEY_VARIABLE, project_locale));
-    } else {
-      currentWorkingPath = path.join(workingPath, name);
-    }
+  return Promise.all(resources.map(({links, name, project_locale}) => new Promise(async (resolve, reject) => {
+      let currentWorkingPath = workingPath;
+      if (baseOverrideLanguage && baseOverrideFileName && project_locale === baseOverrideLanguage) {
+          console.info(`Overwrite base locale (${baseOverrideLanguage}) to`, baseOverrideFileName);
+          currentWorkingPath = path.join(
+              currentWorkingPath,
+              baseOverrideFileName.replace(LANGUAGE_KEY_VARIABLE, project_locale),
+          );
+      } else if (fileName) {
+          currentWorkingPath = path.join(workingPath, fileName.replace(LANGUAGE_KEY_VARIABLE, project_locale));
+      } else {
+          currentWorkingPath = path.join(workingPath, name);
+      }
 
-    const fileWriteStream = fs.createWriteStream(path.resolve(currentWorkingPath));
-    const fileDownloadStream = downloadOne({link: links[0].href, token});
-    fileDownloadStream.pipe(fileWriteStream);
+      const fileWriteStream = fs.createWriteStream(path.resolve(currentWorkingPath));
 
-    fileWriteStream.on('close', () => {
-      console.info('Downloaded', name);
-      resolve();
-    });
+      const {data} = await axios.get(`${links[0].href}?auth_token=${token}`, {responseType: "stream"});
 
-    fileWriteStream.on('error', err => reject(err));
+      data.pipe(fileWriteStream);
+
+      fileWriteStream.on('close', () => {
+          console.info('Downloaded', name);
+          resolve();
+      });
+
+      fileWriteStream.on('error', err => reject(err));
   })));
 };
 

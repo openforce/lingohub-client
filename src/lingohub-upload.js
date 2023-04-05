@@ -1,4 +1,4 @@
-const request = require('request');
+const axios = require('axios');
 const path = require('path');
 const fs = require('fs');
 const BASE_URL = require('./config').BASE_URL;
@@ -6,18 +6,16 @@ const BASE_URL = require('./config').BASE_URL;
 const uploadOne = ({account, project, token, filePath}) => {
   const UPLOAD_URL = `${BASE_URL}${account}/projects/${project}/resources?auth_token=${token}`;
 
-  return new Promise((resolve, reject) => request.post({
-    url: UPLOAD_URL,
+  return axios.post(UPLOAD_URL, {
     formData: {
       file: fs.createReadStream(filePath),
-    },
-  }, (err) => {
-    if (err) {
-      reject(err);
-    } else {
-      resolve();
     }
-  }));
+  }).then(function (response) {
+    console.log(response);
+  })
+      .catch(function (error) {
+        console.log(error);
+      });
 };
 
 module.exports = async function LingoHubUpload({account, project, token, fileName, workingDirectory}) {
