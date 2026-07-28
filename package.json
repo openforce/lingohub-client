@@ -6,6 +6,9 @@
   "bin": {
     "lasc": "./bin/index.js"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": " git@github.com:openforce/lingohub-client.git"
